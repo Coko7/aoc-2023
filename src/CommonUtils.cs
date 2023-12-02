@@ -22,6 +22,7 @@ namespace aoc_2023.src
 
         public static string DataDir => Path.Combine(ProjectDirectory, "data");
         public static string SrcDir => Path.Combine(ProjectDirectory, "src");
+        private static string GetDayLabel(int day) => day < 10 ? $"0{day}" : $"{day}";
 
         public static AocSolver InstantiateSolver(int day)
         {
@@ -29,7 +30,18 @@ namespace aoc_2023.src
             string className = $"aoc_2023.src.day{dayLabel}.Day{dayLabel}Solver";
 
             var type = Type.GetType(className);
-            if (type == null) throw new Exception($"Failed to instantiate solver for day {day}");
+            if (type == null)
+            {
+                // Solver not found, setup data and solver for today
+                Console.WriteLine($"Solver not found for day {day}, attempting to generate it...");
+                SetupDataFilesForDay(day);
+                SetupSolverForDay(day);
+                
+                // Get type again
+                type = Type.GetType(className);
+            }
+
+            if (type == null) throw new Exception($"Failed to get solver class for day {day}");
 
             var instance = (AocSolver)Activator.CreateInstance(type)!;
             if (instance == null) throw new Exception($"Failed to instantiate solver for day {day}");
@@ -37,56 +49,62 @@ namespace aoc_2023.src
             return instance;
         }
 
-        private static string GetDayLabel(int day) => day < 10 ? $"0{day}" : $"{day}";
         public static void SetupAOCWorkspace()
         {
             Console.WriteLine("Setting up AOC work environment...");
 
-            SetupAOCData();
-            SetupAOCSolvers();
+            SetupAOCDataFull();
+            SetupAOCSolversFull();
 
             Console.WriteLine("AOC work environment successfully setup!");
         }
 
-        private static void SetupAOCData()
+        private static void SetupAOCDataFull()
         {
             for (int day = 1; day <= 25; day++)
             {
-                string dirName = $"day{GetDayLabel(day)}";
-                string dayDirPath = Path.Combine(DataDir, dirName);
-                if (!Directory.Exists(dayDirPath))
-                {
-                    Console.WriteLine($"Creating directory for day {day}...");
-                    Directory.CreateDirectory(dayDirPath);
-                }
-
-                CreateFileIfMissing(Path.Combine(dayDirPath, "example"));
-                CreateFileIfMissing(Path.Combine(dayDirPath, "example2"));
-
-                CreateFileIfMissing(Path.Combine(dayDirPath, "input"));
-                CreateFileIfMissing(Path.Combine(dayDirPath, "input2"));
-
-                CreateFileIfMissing(Path.Combine(dayDirPath, "custom"));
+                SetupDataFilesForDay(day);
             }
         }
 
-        private static void SetupAOCSolvers()
+        private static void SetupDataFilesForDay(int day)
         {
-            //string dayDirPath = Path.Combine(CODE_DIR, "day02");
-            //CreateSolverIfMissing(dayDirPath, 2);
+            string dirName = $"day{GetDayLabel(day)}";
+            string dayDirPath = Path.Combine(DataDir, dirName);
+            if (!Directory.Exists(dayDirPath))
+            {
+                Console.WriteLine($"Creating data directory for day {day}...");
+                Directory.CreateDirectory(dayDirPath);
+            }
 
+            CreateFileIfMissing(Path.Combine(dayDirPath, "example"));
+            CreateFileIfMissing(Path.Combine(dayDirPath, "example2"));
+
+            CreateFileIfMissing(Path.Combine(dayDirPath, "input"));
+            CreateFileIfMissing(Path.Combine(dayDirPath, "input2"));
+
+            CreateFileIfMissing(Path.Combine(dayDirPath, "custom"));
+        }
+
+        private static void SetupAOCSolversFull()
+        {
             for (int day = 1; day <= 25; day++)
             {
-                string dirName = $"day{GetDayLabel(day)}";
-                string dayDirPath = Path.Combine(SrcDir, dirName);
-                if (!Directory.Exists(dayDirPath))
-                {
-                    Console.WriteLine($"Creating directory for day {day}...");
-                    Directory.CreateDirectory(dayDirPath);
-                }
-
-                CreateSolverIfMissing(dayDirPath, day);
+                SetupSolverForDay(day);
             }
+        }
+
+        private static void SetupSolverForDay(int day)
+        {
+            string dirName = $"day{GetDayLabel(day)}";
+            string dayDirPath = Path.Combine(SrcDir, dirName);
+            if (!Directory.Exists(dayDirPath))
+            {
+                Console.WriteLine($"Creating src directory for day {day}...");
+                Directory.CreateDirectory(dayDirPath);
+            }
+
+            CreateSolverIfMissing(dayDirPath, day);
         }
 
         private static void CreateSolverIfMissing(string dirPath, int day)
@@ -124,14 +142,12 @@ namespace aoc_2023.src
                 "}\n";
 
             File.WriteAllText(filePath, content);
+            Console.WriteLine($"Successfully generated new solver: " + className);
         }
 
         private static void CreateFileIfMissing(string filePath)
         {
-            if (!File.Exists(filePath))
-            {
-                File.Create(filePath).Close();
-            }
+            if (!File.Exists(filePath)) File.Create(filePath).Close();
         }
 
         public static string ReadInput(int day, string name)
