@@ -116,38 +116,55 @@ namespace aoc_2023.src
 
             if (File.Exists(filePath)) return;
 
-            string content = $"namespace aoc_2023.src.day{label}\n" +
-                "{\n" +
-                "\tpublic class " + className + " : AocSolver\n" +
-                "\t{\n" +
-                "\t\t// Link to the puzzle: " + $"https://adventofcode.com/2023/day/{day}\n" +
-                "\t\t\n" +
-                "\t\tpublic override int Day => " + day + ";\n" +
-                "\t\tpublic override void Solve()\n" +
-                "\t\t{\n" +
-                "\t\t\tstring input = ReadInput(\"example\");\n" +
-                "\t\t\tstring[] lines = ReadInputLines(\"example\");\n" +
-                "\t\t\t\n" +
-                "\t\t\tConsole.WriteLine($\"Result is \");\n" +
-                "\t\t}\n" +
-                "\t\t\n" +
-                "\t\tpublic override void SolvePart2()\n" +
-                "\t\t{\n" +
-                "\t\t\tstring input = ReadInput(\"example\");\n" +
-                "\t\t\tstring[] lines = ReadInputLines(\"example\");\n" +
-                "\t\t\t\n" +
-                "\t\t\tConsole.WriteLine($\"Result for part 2 is \");\n" +
-                "\t\t}\n" +
-                "\t}\n" +
-                "}\n";
+            string lf = "\n";
 
-            File.WriteAllText(filePath, content);
+            string t = "\t";
+            string tt = t + t;
+            string ttt = t + t + t;
+
+            string ob = "{";
+            string cb = "}";
+
+            var sb = new StringBuilder();
+            sb.AppendLine($"namespace aoc_2023.src.day{label}");
+            sb.AppendLine($"{ob}");
+            sb.AppendLine($"{t}public class {className} : AocSolver");
+            sb.AppendLine($"{t}{ob}");
+            sb.AppendLine($"{tt}// Link to the puzzle: https://adventofcode.com/2023/day/{day}");
+            sb.AppendLine();
+            sb.AppendLine($"{tt}public override int Day => {day};");
+            sb.AppendLine($"{tt}public override void Solve()");
+            sb.AppendLine($"{tt}{ob}");
+            sb.AppendLine($"{ttt}string input = ReadInput(\"example\");");
+            sb.AppendLine($"{ttt}string[] lines = ReadInputLines(\"example\");");
+            sb.AppendLine();
+            sb.AppendLine($"{ttt}Console.WriteLine($\"Result is \");");
+            sb.AppendLine($"{tt}{cb}");
+            sb.AppendLine();
+            sb.AppendLine($"{tt}public override void SolvePart2()");
+            sb.AppendLine($"{tt}{ob}");
+            sb.AppendLine($"{ttt}string input = ReadInput(\"example\");");
+            sb.AppendLine($"{ttt}string[] lines = ReadInputLines(\"example\");");
+            sb.AppendLine();
+            sb.AppendLine($"{ttt}Console.WriteLine($\"Result for part 2 is \");");
+            sb.AppendLine($"{tt}{cb}");
+            sb.AppendLine($"{t}{cb}");
+            sb.AppendLine($"{cb}");
+
+            File.WriteAllText(filePath, sb.ToString());
             Console.WriteLine($"Successfully generated new solver: " + className);
         }
 
         private static void CreateFileIfMissing(string filePath)
         {
             if (!File.Exists(filePath)) File.Create(filePath).Close();
+        }
+
+        private static void FetchInputAndWriteToFile(int day, int part)
+        {
+            var client = new HttpClient();
+            //var response = client.GetAsync($"https://adventofcode.com/2023/day/{day}/input");
+            //TODO: write input to file
         }
 
         public static string ReadInput(int day, string name)
