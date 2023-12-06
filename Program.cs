@@ -1,4 +1,5 @@
 ﻿using aoc_2023.src;
+using aoc_2023.src.day05;
 
 namespace aoc_2023
 {
@@ -8,6 +9,7 @@ namespace aoc_2023
         {
             //Setup();
             SolveDailyPuzzle();
+            //SolveSpecificPuzzle(1);
         }
 
         private static void SolveDailyPuzzle()
@@ -25,6 +27,12 @@ namespace aoc_2023
 
             dailySolver.Solve();
             //dailySolver.SolvePart2();
+        }
+
+        private static void SolveSpecificPuzzle(int day, int part = 1)
+        {
+            var solver = CommonUtils.InstantiateSolver(day);
+            solver.Solve();
         }
 
         private static void Setup()
