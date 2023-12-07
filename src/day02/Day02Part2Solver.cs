@@ -1,36 +1,32 @@
 namespace aoc_2023.src.day02
 {
-    public class Day02Solver : AocSolver
-    {
-        // Link to the puzzle: https://adventofcode.com/2023/day/2
+	public class Day02Part2Solver : AocSolver
+	{
+		// Link to the puzzle: https://adventofcode.com/2023/day/2
+		
+		public override int Day => 2;
+		public override int Part => 2;
 
-        public override int Day => 2;
-        public override int Part => 1;
+		public override void Solve()
+		{
+			string[] lines = ReadInputLines("input");
 
-        public override void Solve()
-        {
-            string[] lines = ReadInputLines("input");
-            var bagLoad = new Dictionary<string, int>()
-            {
-                { "red", 12 },
-                { "green", 13 },
-                { "blue", 14 },
-            };
-
-            int sum = 0;
-            foreach (var line in lines)
-            {
-                var game = CubeGame.CreateFromLine(line);
-                var possible = game.IsGamePossible(bagLoad);
-                if (possible)
-                {
-                    sum += game.Id;
-                    Console.WriteLine($"Game {game.Id} is possible");
-                }
-            }
-
-            Console.WriteLine($"Result is {sum}");
-        }
+			int powSum = 0;
+			foreach (var line in lines)
+			{
+				var game = CubeGame.CreateFromLine(line);
+				int power = game.GetGamePower();
+				powSum += power;
+				Console.WriteLine($"Game {game.Id}: {power}");
+				//if (possible)
+				//{
+				//	sum += game.Id;
+				//	Console.WriteLine($"Game {game.Id} is possible");
+				//}
+			}
+			
+			Console.WriteLine($"Result is {powSum}");
+		}
 
         private class CubeGame
         {
