@@ -1,11 +1,11 @@
 namespace aoc_2023.src.day07
 {
-    public class Day07Solver : AocSolver
+    public class Day07Part2Solver : AocSolver
     {
         // Link to the puzzle: https://adventofcode.com/2023/day/7
 
         public override int Day => 7;
-        public override int Part => 1;
+        public override int Part => 2;
 
         public override void Solve()
         {
@@ -31,7 +31,7 @@ namespace aoc_2023.src.day07
                 Console.WriteLine($"{rank++} {kvp.Key} {kvp.Value} => {winnings}");
             }
 
-            Console.WriteLine($"Result is {sumWinnings}");
+            Console.WriteLine($"Result for part 2 is {sumWinnings}");
         }
 
         private static int CompareCombinations(KeyValuePair<string, int> a, KeyValuePair<string, int> b)
@@ -60,24 +60,41 @@ namespace aoc_2023.src.day07
 
         private static int GetHandType(string hand)
         {
-            if (hand.Distinct().Count() == 1) return 100; // Five of a kind
-            if (hand.Distinct().Count() == 5) return 1; // High card
-
-            var distinctCards = hand.Distinct().ToArray();
-            int[] freqs = new int[distinctCards.Length];
-
-            foreach (char c in hand)
+            var freqDict = new Dictionary<char, int>();
+            for (int i = 0; i < hand.Length; i++)
             {
-                for (int i = 0; i < distinctCards.Length; i++)
+                char card = hand[i];
+                if (card == 'J') continue;
+
+                if (freqDict.ContainsKey(card))
                 {
-                    if (distinctCards[i] == c) freqs[i]++;
+                    freqDict[card]++;
+                }
+                else
+                {
+                    freqDict.Add(card, 1);
                 }
             }
 
-            if (freqs.Length == 2 && freqs.Max() == 4) return 90; // Four of a kind
-            if (freqs.Length == 2 && freqs.Max() == 3) return 80; // Full house
-            if (freqs.Length == 3 && freqs.Max() == 3) return 70; // Three of a kind
-            if (freqs.Length == 4 && freqs.Max() == 2) return 10; // One pair
+            char leadingCard;
+            if (freqDict.Any())
+            {
+                leadingCard = freqDict.MaxBy(kvp => kvp.Value).Key;
+                int jokerCount = hand.Count(card => card == 'J');
+                freqDict[leadingCard] += jokerCount;
+            }
+            else
+            {
+                leadingCard = 'J';
+                freqDict.Add('J', 5);
+            }
+
+            if (freqDict.Count == 1) return 100; // Five of a kind
+            if (freqDict.Count == 2 && freqDict[leadingCard] == 4) return 90; // Four of a kind
+            if (freqDict.Count == 2 && freqDict[leadingCard] == 3) return 80; // Full house
+            if (freqDict.Count == 3 && freqDict[leadingCard] == 3) return 70; // Three of a kind
+            if (freqDict.Count == 4 && freqDict[leadingCard] == 2) return 10; // One pair
+            if (freqDict.Count == 5) return 1; // High card
 
             return 20; // Two pair
         }
@@ -97,10 +114,11 @@ namespace aoc_2023.src.day07
             if (char.IsDigit(card)) return card - 48;
 
             if (card == 'T') return 10;
-            if (card == 'J') return 11;
             if (card == 'Q') return 12;
             if (card == 'K') return 13;
             if (card == 'A') return 14;
+
+            if (card == 'J') return 1;
 
             throw new Exception("Invalid card label");
         }

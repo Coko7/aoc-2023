@@ -10,8 +10,8 @@ namespace aoc_2023.src
     public abstract class AocSolver
     {
         public abstract int Day { get; }
+        public abstract int Part { get; }
         public abstract void Solve();
-        public abstract void SolvePart2();
 
         protected string ReadInput(string input)
         {

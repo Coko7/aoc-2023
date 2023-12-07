@@ -1,11 +1,11 @@
 namespace aoc_2023.src.day03
 {
-	public class Day03Solver : AocSolver
+	public class Day03Part2Solver : AocSolver
 	{
 		// Link to the puzzle: https://adventofcode.com/2023/day/3
 		
 		public override int Day => 3;
-		public override int Part => 1;
+		public override int Part => 2;
 
 		public override void Solve()
 		{
@@ -17,14 +17,29 @@ namespace aoc_2023.src.day03
 			grid.Display();
 
 			int sum = 0;
-			foreach (var num in partNumbers)
+			for (int y = 0; y < grid.Cells.Length; y++)
 			{
-				Console.WriteLine(num.NumValue);
-				if (num.NumValue < 0) throw new Exception("UNPARSED NUM");
-				sum += num.NumValue;
+				for (int x = 0; x < grid.Cells[y].Length; x++)
+				{
+					var cell = grid.Cells[y][x];
+					if (cell.Content?.Type == "sym")
+					{
+						var sym = (EngineSymbol)cell.Content;
+						if (sym.Value == '*' && sym.AdjacentPartNumbers.Count == 2)
+						{
+							int gearRatio = 1;
+							foreach (var partNum in sym.AdjacentPartNumbers)
+							{
+								gearRatio *= partNum.NumValue;
+							}
+							Console.WriteLine("Gear ratio is " + gearRatio);
+							sum += gearRatio;
+						}
+					}
+				}
 			}
 			
-			Console.WriteLine($"Result is {sum}");
+			Console.WriteLine($"Result for part 2 is {sum}");
 		}
 
 		private static EngineGrid ProcessGrid(string[] lines)

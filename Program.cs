@@ -12,7 +12,7 @@ namespace aoc_2023
             //SolveSpecificPuzzle(1);
         }
 
-        private static void SolveDailyPuzzle()
+        private static void SolveDailyPuzzle(bool isPart2 = false)
         {
             var now = DateTime.Now;
             int month = now.Month;
@@ -21,17 +21,15 @@ namespace aoc_2023
             int day = now.Day;
             if (day > 25) throw new Exception($"No more puzzle for this year's AOC! Come back in {now.Year + 1}");
 
-            var dailySolver = CommonUtils.InstantiateSolver(day);
-
             // Execute the code to solve today's puzzle
 
+            var dailySolver = CommonUtils.InstantiateSolver(day + 1, isPart2);
             dailySolver.Solve();
-            //dailySolver.SolvePart2();
         }
 
-        private static void SolveSpecificPuzzle(int day, int part = 1)
+        private static void SolveSpecificPuzzle(int day, bool isPart2 = false)
         {
-            var solver = CommonUtils.InstantiateSolver(day);
+            var solver = CommonUtils.InstantiateSolver(day, isPart2);
             solver.Solve();
         }
 
