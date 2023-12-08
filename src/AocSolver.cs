@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using aoc_2023.src.Utils;
 
 namespace aoc_2023.src
 {

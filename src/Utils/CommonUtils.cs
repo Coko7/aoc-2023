@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace aoc_2023.src
+namespace aoc_2023.src.Utils
 {
     public class CommonUtils
     {
@@ -27,16 +27,16 @@ namespace aoc_2023.src
         public static AocSolver InstantiateSolver(int day, bool isPart2)
         {
             string dayLabel = GetDayLabel(day);
-            string className = $"aoc_2023.src.day{dayLabel}.Day{dayLabel}{(isPart2 ? "Part2": "")}Solver";
+            string className = $"aoc_2023.src.day{dayLabel}.Day{dayLabel}{(isPart2 ? "Part2" : "")}Solver";
 
             var type = Type.GetType(className);
             if (type == null)
             {
                 // Solver not found, setup data and solver for today
-                Console.WriteLine($"Solver not found: day{dayLabel}{(isPart2 ? " part 2": "")}! Attempting to generate it...");
+                Console.WriteLine($"Solver not found: day{dayLabel}{(isPart2 ? " part 2" : "")}! Attempting to generate it...");
                 SetupDataFilesForDay(day);
                 SetupSolverForDay(day, isPart2);
-                
+
                 // Get type again
                 type = Type.GetType(className);
             }
