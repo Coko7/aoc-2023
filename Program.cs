@@ -1,5 +1,4 @@
-﻿using aoc_2023.src;
-using aoc_2023.src.day05;
+﻿using aoc_2023.src.Utils;
 
 namespace aoc_2023
 {
@@ -23,7 +22,7 @@ namespace aoc_2023
 
             // Execute the code to solve today's puzzle
 
-            var dailySolver = CommonUtils.InstantiateSolver(day + 1, isPart2);
+            var dailySolver = CommonUtils.InstantiateSolver(day, isPart2);
             dailySolver.Solve();
         }
 
