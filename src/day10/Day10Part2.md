@@ -34,7 +34,7 @@ I would like to spend more time on this problem and come up with an algorithm th
 7. Then use `Select` > `By Color` and click on a dot. This will select all the dots in the image
 8. Open the histogram `Windows` > `Dockable Dialogs` > `Histogram`
 9. Write down the number of pixels
-10. Divide by 9 because a single dot is made up of nine pixels
+10. Divide by 9 because a single dot was made up of nine pixels in my screenshot
 11. Submit the result for part 2
 
 This is not an elegant solution to the problem since I had to resort to external tools that did all the work (Gimp).
