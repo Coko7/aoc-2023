@@ -14,7 +14,7 @@ I would like to spend more time on this problem and come up with an algorithm th
 1. Find all the pipes that are part of the loop (done in part 1)
 2. Print the entire map to the console so that:
 	- Start pipe is displayed as 'S'
-	- Ground is displayed as '.' 'a dot)
+	- Ground is displayed as '.' (a dot)
 	- Pipes that are not part of the loop are not printed
 	- Pipes that are part of the loop are printed but using a specific unicode symbol:
 
