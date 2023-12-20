@@ -2,15 +2,19 @@
 
 My code for the [Advent of Code - 2023 edition](https://adventofcode.com/2023)
 
+## 👋 Introduction
+
+When I first began doing [AOC](https://adventofcode.com) challenges in 2022, I had no setup. Each day, I would create all of the files manually before starting to write code.
+It worked but it made me lose some time here and there. Usually, I would create the file before the daily challenge came out but sometimes I woke up late and lost a bit of time doing some late file creations.
+Also, I did not have my own utility classes and I would copy the same code to read and parse the file from the previous day.
+All of the things I have mentioned are not huge issues but it was still bothering me.
+
+That's why this year, I have decided to do things a little differently.
+
 ## 🛠️ Proper workspace
 
-When I first began doing AOC challenges in 2022, I had no setup. I would create each file manually when it was time to do the daily challenge.
-It worked but it made me lose some time everyday. Usually, I would create the file before the daily challenge came out but sometimes I forgot.
-Also, I did not have any proper utility classes and I would copy the same code to read and parse the file from the previous day.
-
-This year, I have done things a little differently.
-I have created proper structure for my project and wrote utility classes to automatically generate the needed files, easily read the inputs and run the code.
-Thanks to that, I can jump straight to solving the daily challenge instead of losing time doing things that could have been done automatically.
+I have created proper structure for my project and wrote my own utility classes to automatically generate the needed files, easily read the inputs and run the code.
+Thanks to that, I can jump straight to solving the daily challenge instead of losing time setting up everything.
 
 What the workspace takes care of:
 - Automatically generating empty input files (example, input, input2, etc.) for the current day. I still need to manually copy my input data from AOC website inside the file but that takes like 5 seconds. *I am not so good at solving AOC programming challenges that these lost seconds matter anyway :)*
