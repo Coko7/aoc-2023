@@ -14,9 +14,9 @@ namespace aoc_2023.src.Utils
 
         public static long Lcm(long a, long b) => Math.Abs(a * b) / Gcd(a, b);
 
-        public static long Gcd(long[] numbers) => numbers.Aggregate(Gcd);
+        public static long Gcd(IEnumerable<long> numbers) => numbers.Aggregate(Gcd);
 
-        public static long Lcm(long[] numbers) => numbers.Aggregate(Lcm);
+        public static long Lcm(IEnumerable<long> numbers) => numbers.Aggregate(Lcm);
 
         // Int functions
 
@@ -24,8 +24,8 @@ namespace aoc_2023.src.Utils
 
         public static int Lcm(int a, int b) => Math.Abs(a * b) / Gcd(a, b);
 
-        public static int Gcd(int[] numbers) => numbers.Aggregate(Gcd);
+        public static int Gcd(IEnumerable<int> numbers) => numbers.Aggregate(Gcd);
 
-        public static int Lcm(int[] numbers) => numbers.Aggregate(Lcm);
+        public static int Lcm(IEnumerable<int> numbers) => numbers.Aggregate(Lcm);
     }
 }
